@@ -1,0 +1,24 @@
+<template>
+    <div>
+  
+        <h1>hi</h1>
+    </div>
+</template>
+
+
+<script>
+export default {
+    // create component
+}
+</script>
+
+
+<style>
+</style>
+
+<!-- <template>
+    <div>
+  
+
+    </div>
+</template> -->
