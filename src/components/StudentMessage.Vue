@@ -1,24 +1,23 @@
 <template>
-    <div>
-  
-        <h1>hi</h1>
+  <div>
+    <div v-if="student.name">
+      <div class="alert alert-success" v-if="student.present">
+        welcome, {{ student.name }}
+      </div>
+      <div class="alert alert-danger" v-else>
+        goodbye, {{ student.name }}. see you later
+      </div>
     </div>
+  </div>
 </template>
-
 
 <script>
 export default {
-    // create component
-}
+  name: "StudentMessage",
+  props: {
+    student: Object,
+  },
+};
 </script>
 
-
-<style>
-</style>
-
-<!-- <template>
-    <div>
-  
-
-    </div>
-</template> -->
+<style></style>

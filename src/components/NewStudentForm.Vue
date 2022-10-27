@@ -1,88 +1,74 @@
 <template>
-    <div>
-        <div class="alert alert-danger" v-if = 'errors.length > 0'>
-            <!-- <ul>
-                <li v-for = "error in errors">{{error}}</li>
-            </ul> -->
-        </div>
-
-        <div class="card add-student m-2 p-2">
-            <h4 class="card-title">Add new student</h4>
-
-            <div class="form-group">
-                <label for="name">Name</label>
-                <!-- TODO v-model newStudentName -->
-                <input  id="name" class="form-control" v-model.trim = "newStudentName">
-            </div>
-            <div class="form-group">
-                <label for="starID">Star ID</label>
-                <!-- TODO v-model newStarID -->
-                <input  id="starID" class="form-control" v-model.trim = "newStarID">
-            </div>
-            <!-- TODO v-on:click event handler -->
-            <button class="btn btn-primary" v-on:click = "addStudent">Add</button>
-        </div>
+ <div>
+    <div class="alert alert-danger" v-if="errors.length > 0">
+      <ul>
+        <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+      </ul>
     </div>
-</template>
 
+    <div class="card add-student m-2 p-2">
+      <h4 class="card-title">Add new student</h4>
+
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" class="form-control" v-model.trim="newStudentName" />
+      </div>
+      <div class="form-group">
+        <label for="starID">Star ID</label>
+        <input id="starID" class="form-control" v-model.trim="newStarID" />
+      </div>
+      <br>
+      <button class="btn btn-primary" v-on:click="addStudent">Add</button>
+    </div>
+  </div>
+</template>
 
 <script>
 export default {
-    // create component
-    name: 'NewStudentForm',
-    data() {
-        return {
-            newStudentName:'',
-            newStarID: '',
-            errors: []
-        }
-    }, 
-    methods: {
-        addStudent() {
+  // create component
+  name: "NewStudentForm",
+  emits: ["student-added"], // doc events it emits
+  data() {
+    return {
+      newStudentName: "",
+      newStarID: "",
+      errors: [],
+    };
+  },
+  methods: {
+    addStudent() {
+      // clear errors array
+      this.errors = [];
 
-                // clear errors array
-                this.errors = []
+      if (!this.newStudentName) {
+        this.errors.push("A name must be entered");
+      }
 
-                if (!this.newStudentName) {
-                this.errors.push('A name must be entered')
-                }
+      if (!this.newStarID) {
+        this.errors.push("A star ID must be entered");
+      }
 
-                if (!this.newStarID) {
-                this.errors.push('A star ID must be entered')
-                }
+      // TODO make it not add students that already in the list
+      // if (this.newStudentName === this.student) {
+      //   this.errors.push("The student is already in their");
+      // }
 
-                if (this.errors.length == 0) {
-                let student = {
-                    name: this.newStudentName,
-                    starID: this.newStarID,
-                    present: false
-                }
-                //  TODO emit message to parent with new student
-                this.newStudentName = ''
-                this.newStarID = ''
+      if (this.errors.length == 0) {
+        let student = {
+          name: this.newStudentName,
+          starID: this.newStarID,
+          present: false,
+        };
+        //  
 
-                this.students.sort(function (s1, s2) {
-                    if (s1.name.toUpperCase() > s2.name.toUpperCase()) {
-                    return 1
-                    }
+        this.$emit("student-added", student);
 
-                    if (s1.name.toUpperCase() < s2.name.toUpperCase()) {
-                    return -1
-                    }
-
-                    return 0
-                })
-            }
-
-        }
-    }
-}
-
-
-
-    
+        this.newStudentName = "";
+        this.newStarID = "";
+      }
+    },
+  },
+};
 </script>
 
-
-<style>
-</style>
+<style></style>
