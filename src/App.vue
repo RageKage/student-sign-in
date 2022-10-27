@@ -4,6 +4,7 @@
     <student-table
       v-bind:students="students"
       v-on:student-arrived-or-left="studentArrivedOrLeft"
+      v-on:delete-student="studentDelete"
     ></student-table>
     <student-message :student="mostRecentStudents"></student-message>
   </div>
@@ -24,7 +25,7 @@ export default {
   data() {
     return {
       students: [],
-      mostRecentStudents: {}
+      mostRecentStudents: {},
     };
   },
   methods: {
@@ -35,25 +36,31 @@ export default {
         return s1.name.toUpperCase() < s2.name.toUpperCase() ? -1 : 1;
       });
     },
-    studentArrivedOrLeft(student, present){
-        // find the student in array of students
-        // update the present Attribute
+    studentArrivedOrLeft(student, present) {
+      // find the student in array of students
+      // update the present Attribute
 
-        let updateStudent = this.students.find(function(s){
-          if(s.name === student.name && s.starID === student.starID) {
-            return true
-          }
-        
-        })
-        if (updateStudent) {
-          updateStudent.present = present
-          this.mostRecentStudents = updateStudent
-          console.log(updateStudent)
+      let updateStudent = this.students.find(function (s) {
+        if (s.name === student.name && s.starID === student.starID) {
+          return true;
         }
-    }
+      });
+      if (updateStudent) {
+        updateStudent.present = present;
+        this.mostRecentStudents = updateStudent;
+        console.log(updateStudent);
+      }
+    },
+    studentDelete(student) {
+      // returns
+      this.students = this.students.filter(function (s) {
+        if (s != student) {
+          return true;
+        }
+      });
+      this.mostRecentStudents = ''
+    },
   },
-
-
 };
 </script>
 <style>
