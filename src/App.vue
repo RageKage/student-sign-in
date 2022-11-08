@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h1>Hi</h1>
     <new-student-form v-on:student-added="newStudentAdded"></new-student-form>
     <student-table
       v-bind:students="students"
